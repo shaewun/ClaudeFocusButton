@@ -154,16 +154,14 @@ LaunchAndFocus(mode, x, y, w, h) {
     ; Give Electron a moment to render before we try to move or interact with it
     Sleep(2000)
 
-    if (mode != "") {
-        ; Maximize first so Electron reflows at full size, then snap to target.
-        ; Skipping this causes the UI to get stuck in a narrow layout on split mode.
-        WinMaximize("ahk_id " claudeHwnd)
-        Sleep(600)
-        WinRestore("ahk_id " claudeHwnd)
-        Sleep(200)
-        WinMove(x, y, w, h, "ahk_id " claudeHwnd)
-        Sleep(500)
-    }
+    ; Maximize first so Electron reflows at full size, then snap to target.
+    ; Skipping this causes the UI to get stuck in a narrow layout on split mode.
+    WinMaximize("ahk_id " claudeHwnd)
+    Sleep(600)
+    WinRestore("ahk_id " claudeHwnd)
+    Sleep(200)
+    WinMove(x, y, w, h, "ahk_id " claudeHwnd)
+    Sleep(500)
 
     DllCall("AllowSetForegroundWindow", "UInt", 0xFFFFFFFF)
     WinActivate("ahk_id " claudeHwnd)
@@ -214,11 +212,13 @@ FocusTextBox(hwnd) {
         MsgBox("Could not find text box after retries.", "claude-focus")
         return
     }
+    ; Primary: focus via accessibility pattern — no mouse movement
     try {
         legacyPattern := textBox.GetCurrentPattern(UIA.Pattern.LegacyIAccessible)
         legacyPattern.Select(1)
         return
     }
+    ; Fallback: click the center of the element's bounding rectangle
     rect := textBox.BoundingRectangle
     clickX := rect.l + (rect.r - rect.l) // 2
     clickY := rect.t + (rect.b - rect.t) // 2

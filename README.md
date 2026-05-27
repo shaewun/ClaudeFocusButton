@@ -42,7 +42,7 @@ Download and run the installer from [autohotkey.com](https://www.autohotkey.com/
 
 The script must run under `AutoHotkey_UIA.exe`, not the standard `AutoHotkey.exe`:
 
-1. Right-click `claude-focus.ahk` → **Open with → Choose another app**
+1. Right-click `claude-focus-FINAL.ahk` → **Open with → Choose another app**
 2. Browse to your AutoHotkey install folder (usually `C:\Program Files\AutoHotkey\v2\`)
 3. Select **`AutoHotkey_UIA.exe`**
 4. Check **Always use this app** and confirm
@@ -50,7 +50,7 @@ The script must run under `AutoHotkey_UIA.exe`, not the standard `AutoHotkey.exe
 ### Step 4 — Add to startup
 
 1. Press `Win+R`, type `shell:startup`, hit Enter
-2. Copy `claude-focus.ahk` into that folder
+2. Copy `claude-focus-FINAL.ahk` into that folder
 
 The script will now run automatically every time you log in.
 
