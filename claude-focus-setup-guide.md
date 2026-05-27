@@ -63,11 +63,7 @@ The script will now run automatically every time you log in.
 
 1. Requests admin elevation (UAC prompt) if not already running as admin
 2. Uses PowerShell to find Claude's install path automatically — no hardcoded path, survives app updates
-3. Closes any running Claude instance
-4. Relaunches Claude with the `--force-renderer-accessibility` flag, which exposes Claude's UI elements to the accessibility system
-5. Shows a series of tray notifications confirming each step, ending with **"Ready!"**
-
-These startup notifications are normal and only appear once at login.
+3. Verifies Claude is installed and shows a **"Ready!"** tray notification in the bottom-right corner
 
 **When you press a hotkey**, the script:
 
@@ -89,7 +85,7 @@ These startup notifications are normal and only appear once at login.
 The PowerShell lookup for the Claude AppX package returned nothing. Make sure the Claude desktop app is installed. If it's installed but the error persists, open the script in a text editor, find the `CLAUDE_EXE` line, and replace it with the full hardcoded path to `Claude.exe` (find it via Task Manager → right-click the Claude process → Open file location).
 
 **Text box doesn't get focused**
-The script must be the one that launches Claude so it can apply `--force-renderer-accessibility`. If you opened Claude manually before the script ran, close it and let the script relaunch it on next login.
+The script launches Claude with `--force-renderer-accessibility` each time you press the hotkey. If Claude is already open from a manual launch (without that flag), close it first — the next hotkey press will relaunch it correctly.
 
 **Nothing happens when pressing Right Ctrl**
 Confirm the script is running — look for an AHK icon in your system tray. Also make sure it's being run with `AutoHotkey_UIA.exe` and not the standard `AutoHotkey.exe`.

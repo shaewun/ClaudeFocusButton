@@ -4,8 +4,6 @@
 
 ; ── Claude / Cowork — overlay hotkeys ────────────────────────────────────────
 ;
-; On startup: closes and relaunches Claude with --force-renderer-accessibility.
-;
 ; Right Ctrl              : open Claude fullscreen (or close it)
 ; Right Shift + Right Ctrl: open Claude split-right, current app split-left (or close)
 ;
@@ -35,28 +33,9 @@ try FileDelete(tempOut)
 
 DetectHiddenWindows(true)
 
-; Startup: close any running instance and relaunch with accessibility flag
 if !FileExist(CLAUDE_EXE) {
     MsgBox("Claude.exe not found.`n`nPath tried:`n" CLAUDE_EXE, "claude-focus setup")
 } else {
-    TrayTip("Step 1: exe found at " CLAUDE_EXE, "claude-focus", 1)
-    Sleep(2000)
-    if WinExist(WIN_QUERY) {
-        TrayTip("Step 2: closing Claude...", "claude-focus", 1)
-        Sleep(2000)
-        WinClose(WIN_QUERY)
-        WinWaitClose(WIN_QUERY, , 5)
-    } else {
-        TrayTip("Step 2: Claude not running, skipping close", "claude-focus", 1)
-        Sleep(2000)
-    }
-    TrayTip("Step 3: launching Claude...", "claude-focus", 1)
-    Sleep(2000)
-    Run('"' . CLAUDE_EXE . '" --force-renderer-accessibility')
-    TrayTip("Step 4: waiting for window...", "claude-focus", 1)
-    WinWait(WIN_QUERY, , 15)
-    TrayTip("Step 5: waiting for accessibility tree...", "claude-focus", 1)
-    Sleep(5000)
     TrayTip("Ready! Right Ctrl = fullscreen  |  RShift+RCtrl = split", "claude-focus", 1)
 }
 
